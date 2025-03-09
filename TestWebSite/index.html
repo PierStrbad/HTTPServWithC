@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Hosted with C program</title>
+        <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+        <main>
+            <h1> Welcome to Website that is hosted using a personal C program </h1>
+            <p> The following parts of the website are for testing purposes only </p>
+            <a href="./pages/about.html"> About Page </a>
+            <div class="showcase-1">
+                <h3> Element size manipulation </h3>
+                <p> By pressing the button you can change the size of the div element </p>
+                <div class="buttons">
+                    <button type="button" onclick="changeSize(0)"> Make Small </button>
+                    <button type="button" onclick="changeSize(1)"> Make Big </button>
+                    <button type="button" onclick="changeColor()"> Change Color </button>
+                </div>
+                <div id="element-1"></div>
+            </div>
+        </main>
+        <script src="./scripts/script.js"></script>
+    </body>
+</html>

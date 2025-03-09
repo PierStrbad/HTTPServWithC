@@ -1,0 +1,12 @@
+{
+  "routes": [
+    "/home-page",
+    "/home-page/account-settings",
+    "/home-page/candidate",
+    "/home-page/search",
+    "/home-page/search/update",
+    "/home-page/users",
+    "/login",
+    "/reset"
+  ]
+}
