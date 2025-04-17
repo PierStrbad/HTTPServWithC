@@ -323,7 +323,7 @@ int main (int argc, char **argv)
         exit(-1);
     }
 
-    struct Server server = server_constructor(AF_INET, SOCK_STREAM, 0, "172.17.0.2", PORT, 10, argv[1]);
+    struct Server server = server_constructor(AF_INET, SOCK_STREAM, 0, "test", PORT, 10, argv[1]);
     server_socket = server.socket;
 
     int address_length = sizeof(server.address);
