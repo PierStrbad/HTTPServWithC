@@ -1,55 +1,51 @@
 #include "Server.h"
 
 #define PORT 8080
-#define BACKLOG 10
 
 int server_socket = 0;
 int fd = 0;
 
-struct Server server_constructor(int domain, int service, int protocol, char* ip, 
+struct Server server_constructor(int domain, int type, int protocol, char* ip, 
     int port, int backlog, char* websiteDirectoryPath)
 {
     struct Server server;
 
-    server.domain = domain;
-    server.service = service;
-    server.protocol = protocol;
     server.ip = ip;
     server.port = port;
     server.backlog = backlog;
     server.websiteDirectoryPath = websiteDirectoryPath;
 
     server.address.sin_family = domain;
-    server.address.sin_port = htons(port);
-    inet_pton(server.domain, ip, &server.address.sin_addr.s_addr);
+    server.address.sin_port = htons(server.port);
+    server.address.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    server.socket = socket(server.domain, server.service, server.protocol);
+    server.socket = socket(PF_INET, type, protocol);
     if (server.socket < 0)
     {
         perror("Failed to connect socket...\n");
-        exit(1);
+        exit(-1);
     }
 
     if (bind(server.socket, (struct sockaddr *)&server.address, sizeof(server.address)) < 0)
     {
         perror("Failed to bind socket...\n");
-        exit(1);
+        exit(-1);
     }
 
     if (listen(server.socket, server.backlog) < 0)
     {
         perror("Failed to start listening...\n");
-        exit(1);
+        exit(-1);
     }
     
-    char hostBuffer[NI_MAXHOST], serviceBuffer[NI_MAXSERV];
-    int error = getnameinfo((struct sockaddr *)&server.address, sizeof(server.address), hostBuffer, sizeof(hostBuffer), serviceBuffer, sizeof(serviceBuffer), 0);
+    socklen_t length;
+    int result = getsockname(server.socket, (struct sockaddr*) &server.address, &length);
     
-    if (error != 0) {
-        printf("Error: %s\n", gai_strerror(error));
-        exit(1);
+    if (result < 0) {
+        printf("Error: %s\n", gai_strerror(result));
+        exit(-1);
     }
-    printf("\nServer is listening on http://%s:%d/\n\n", hostBuffer, server.port);
+    printf("\nServer is listening on http://localhost:%d/\n\n", server.port);
     
     return server;
 }
@@ -327,7 +323,7 @@ int main (int argc, char **argv)
         exit(-1);
     }
 
-    struct Server server = server_constructor(AF_INET, SOCK_STREAM, 0, "", PORT, BACKLOG, argv[1]);
+    struct Server server = server_constructor(AF_INET, SOCK_STREAM, 0, "", PORT, 10, argv[1]);
     server_socket = server.socket;
 
     int address_length = sizeof(server.address);

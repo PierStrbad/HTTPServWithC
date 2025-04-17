@@ -15,3 +15,4 @@ start_server: Server.o
 
 clean:
 	rm -f *.o
+	@./run_server ./dist/browser
