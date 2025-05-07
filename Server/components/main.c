@@ -1,5 +1,6 @@
 #include "../headers/server_structures.h"
 #include "../headers/starting_header.h"
+#include "../headers/important_header.h"
 #include <signal.h>
 
 int server_socket = 0;
@@ -52,12 +53,4 @@ int main(int argc, char** argv)
     exit(0);
 }
 
-void check(int returnValue, char* msg, int fd)
-{
-    if (returnValue == -1) {
-        fprintf(stderr, "%s\n", msg);
-        if (fd != 0)
-            dprintf(fd, "%s\n", msg);
-        exit(1);
-    }
-}
+// Maybe add one more check function that returns an integer??

@@ -13,13 +13,12 @@
 #include <netdb.h>
 #include <time.h>
 #include <fcntl.h>
-#include <netdb.h>
 #include <curl/curl.h>
 #include <dirent.h>
 #include <errno.h>
 #include <stdbool.h>
 
-#define MAX_REQUEST_SIZE 4096
+#define MAX_REQUEST_SIZE 1024
 #define PORT 4200
 #define THREAD_POOL_SIZE 20
 
@@ -36,7 +35,6 @@ struct Client
     char method[16];
     char route[256];
     char dir[256];
-    char requestBuffer[MAX_REQUEST_SIZE];
 };
 
 struct clientNode {
@@ -44,7 +42,5 @@ struct clientNode {
     struct Client* client;
 };
 typedef struct clientNode node_t;
-
-void check(int, char*, int);
 
 #endif

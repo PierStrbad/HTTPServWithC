@@ -7,7 +7,7 @@ all: $(TARGETS)
 
 start_server: components/main.o
 	@echo "Linking..."
-	@$(CC) $(CFLAGS) components/main.c components/server_starting.c components/server_response.c -o run_server
+	@$(CC) $(CFLAGS) components/main.c components/server_starting.c components/server_response.c components/important_components.c -o run_server
 
 %.o:%.c
 	@echo "Compiling..."
